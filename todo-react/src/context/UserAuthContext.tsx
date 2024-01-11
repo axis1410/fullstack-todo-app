@@ -21,8 +21,11 @@ const UserAuthContextProvider: React.FC<UserAuthContextProviderProps> = ({ child
 
   const logout = async () => {
     axios.post("/api/v1/users/logout", {}, { withCredentials: true });
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("refreshToken");
+    // localStorage.removeItem("username");
+    // localStorage.removeItem("isAuthenticated");
+    localStorage.clear();
     setIsAuthenticated(false);
     navigate("/");
   };
@@ -31,7 +34,7 @@ const UserAuthContextProvider: React.FC<UserAuthContextProviderProps> = ({ child
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
 
-    if (accessToken && refreshToken) setIsAuthenticated(true);
+    if (accessToken && refreshToken) setIsAuthenticated(true);  
   }, []);
 
   return (

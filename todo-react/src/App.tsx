@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
+import AddTodo from "./pages/AddTodo";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -11,12 +12,13 @@ function App() {
     <BrowserRouter>
       <UserAuthContextProvider>
         <Navbar />
-        <main className="flex flex-col items-center justify-center min-h-screen">
+        <main className="">
           <Routes>
             <Route path="/" element={<Auth />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/add-todo" element={<AddTodo />} />
           </Routes>
         </main>
       </UserAuthContextProvider>

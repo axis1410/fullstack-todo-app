@@ -27,62 +27,64 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1 className="sm:text-center text-4xl font-semibold mb-4">Create new account</h1>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          className={clsx(
-            `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
-            isLoading && "bg-gray-200 cursor-not-allowed"
-          )}
-          placeholder="Enter full name"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-        <input
-          type="text"
-          className={clsx(
-            `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
-            isLoading && "bg-gray-200 cursor-not-allowed"
-          )}
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="text"
-          className={clsx(
-            `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
-            isLoading && "bg-gray-200 cursor-not-allowed"
-          )}
-          placeholder="Enter username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="text"
-          className={clsx(
-            `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
-            isLoading && "bg-gray-200 cursor-not-allowed"
-          )}
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          disabled={isLoading}
-          className={clsx(
-            `border-[1px] border-black px-2 rounded w-full my-2 h-12 hover:text-white hover:bg-black transition duration-100`,
-            isLoading && "bg-gray-400 cursor-not-allowed"
-          )}
-        >
-          Register
-        </button>
-      </form>
-      <Link className="text-blue-600 text-lg" to="/login">
-        Already registered? Login here
-      </Link>
+    <div className="min-h-screen flex flex-col justify-center items-center">
+      <div className="">
+        <h1 className="sm:text-center text-4xl font-semibold mb-4">Create new account</h1>
+        <form onSubmit={handleRegister}>
+          <input
+            type="text"
+            className={clsx(
+              `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
+              isLoading && "bg-gray-200 cursor-not-allowed"
+            )}
+            placeholder="Enter full name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+          <input
+            type="text"
+            className={clsx(
+              `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
+              isLoading && "bg-gray-200 cursor-not-allowed"
+            )}
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="text"
+            className={clsx(
+              `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
+              isLoading && "bg-gray-200 cursor-not-allowed"
+            )}
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="text"
+            className={clsx(
+              `border-[1px] border-black px-2 w-full rounded my-2  h-12`,
+              isLoading && "bg-gray-200 cursor-not-allowed"
+            )}
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            disabled={isLoading}
+            className={clsx(
+              `border-[1px] border-black px-2 rounded w-full my-2 h-12 hover:text-white hover:bg-black transition duration-100`,
+              isLoading && "bg-gray-400 cursor-not-allowed"
+            )}
+          >
+            Register
+          </button>
+        </form>
+        <Link className="text-blue-600 text-lg" to="/login">
+          Already registered? Login here
+        </Link>
+      </div>
     </div>
   );
 };
