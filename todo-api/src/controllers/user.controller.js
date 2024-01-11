@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { generateAccessAndRefreshTokens } from "../utils/generateTokens.js";
 
-const registerUser = asyncHandler(async (req, res) => {
+export const registerUser = asyncHandler(async (req, res) => {
   const { username, email, fullName, password } = req.body;
 
   if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
@@ -31,7 +31,7 @@ const registerUser = asyncHandler(async (req, res) => {
   return res.status(201).json(new ApiResponse(201, createdUser, "User created successfully"));
 });
 
-const loginUser = asyncHandler(async (req, res) => {
+export const loginUser = asyncHandler(async (req, res) => {
   const { email, username, password } = req.body;
 
   if (!(username || email)) {
@@ -74,8 +74,7 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
-const logoutUser = asyncHandler(async (req, res) => {
-  console.log(req.user);
+export const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
@@ -100,4 +99,24 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "User logged Out"));
 });
 
-export { loginUser, logoutUser, registerUser };
+export const changeUserPassword = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    throw new ApiError(400, "Old and new passwords are required");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) throw new ApiError(404, "User not found");
+
+  const isCurrentPasswordValid = await user.isPasswordCorrect(currentPassword);
+
+  if (!isCurrentPasswordValid) throw new ApiError(401, "Invalid password");
+
+  user.password = newPassword;
+  await user.save();
+
+  return res.status(200).json(new ApiResponse(200, {}, "Password changed successfully"));
+});

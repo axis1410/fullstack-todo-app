@@ -10,15 +10,12 @@ import { verifyJWT } from "../middleware/auth.middleware.js";
 
 const router = Router();
 
-// Securing the routes below with JWT
-router.use(verifyJWT);
+router.route("/").post(verifyJWT, postTodoAsLoggedInUser);
+router.route("/").get(verifyJWT, getTodosCreatedByLoggedInUser);
+router.route("/:todoId").get(verifyJWT, getTodoById);
 
-router.post("/", postTodoAsLoggedInUser);
+router.route("/:todoId").delete(verifyJWT, deleteTodoAsLoggedInUser);
 
-router.get("/", getTodosCreatedByLoggedInUser);
-router.get("/:todoId", getTodoById);
+router.route("/:todoId").put(verifyJWT, updateTodo);
 
-router.delete("/:todoId", deleteTodoAsLoggedInUser);
-
-router.put("/:todoId", updateTodo);
 export default router;
