@@ -1,5 +1,5 @@
+import mongoose, { Schema } from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
-import mongoose, { Schema } from "mongoose;";
 
 const todoSchema = new Schema(
   {
@@ -7,6 +7,10 @@ const todoSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     isComplete: {
       type: Boolean,

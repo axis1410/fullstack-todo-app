@@ -12,6 +12,12 @@ const userSchema = new Schema(
       trim: true,
       index: true,
     },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: 6,
+    },
     fullName: {
       type: String,
       required: true,
