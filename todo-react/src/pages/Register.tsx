@@ -1,6 +1,7 @@
 import axios from "axios";
 import clsx from "clsx";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
@@ -79,6 +80,9 @@ const Register = () => {
           Register
         </button>
       </form>
+      <Link className="text-blue-600 text-lg" to="/login">
+        Already registered? Login here
+      </Link>
     </div>
   );
 };

@@ -1,9 +1,11 @@
 import axios from "axios";
 import clsx from "clsx";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,9 +19,12 @@ const Login = () => {
 
     const user = { username, password };
     axios
-      .post("/api/v1/users/login", user)
+      .post("/api/v1/users/login", user, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.data.accessToken);
+        localStorage.setItem("accessToken", JSON.stringify(res.data.data.accessToken));
+        localStorage.setItem("refreshToken", JSON.stringify(res.data.data.refreshToken));
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
@@ -28,7 +33,7 @@ const Login = () => {
   };
 
   return (
-    <div className="sm:w-[512px] w-screen px-5">
+    <div>
       <h1 className="sm:text-center text-4xl font-semibold mb-4">Login to NT</h1>
       <form onSubmit={handleLogin}>
         <input
@@ -61,19 +66,11 @@ const Login = () => {
           Login
         </button>
       </form>
-      <button
-        disabled={isLoading}
-        className={clsx(
-          `border-[1px] border-black px-2 rounded w-full my-2 h-12 bg-black text-white hover:text-black hover:bg-white transition duration-100`,
-          isLoading && "bg-gray-400 cursor-not-allowed"
-        )}
-      >
-        <Link to="/register">Register</Link>
-      </button>
+      <Link className="text-blue-600 text-lg" to="/register">
+        New user? Create an account.
+      </Link>
     </div>
   );
 };
 
 export default Login;
-
-// what is 256+256
