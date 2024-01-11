@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
+import { UserAuthContext } from "../context/UserAuthContext";
 
 const Navbar = () => {
   const Links = [
     { name: "HOME", link: "/" },
     { name: "ADD ITEM", link: "/add-todo" },
-    { name: "LOGIN", link: "/login" },
   ];
   const [open, setOpen] = useState(false);
+
+  // @ts-expect-error UserAuthContext is not undefined
+  const { isAuthenticated, logout } = useContext(UserAuthContext);
 
   return (
     <nav className="shadow-md w-full fixed top-0 left-0">
@@ -44,6 +47,25 @@ const Navbar = () => {
               </a>
             </li>
           ))}
+          {isAuthenticated ? (
+            <li className="md:ml-8 text-xl md:my-0 my-7">
+              <button
+                onClick={logout}
+                className="text-french_gray-700 hover:text-slate_gray-700 duration-100"
+              >
+                LOGOUT
+              </button>
+            </li>
+          ) : (
+            <li className="md:ml-8 text-xl md:my-0 my-7">
+              <a
+                href="/login"
+                className="text-french_gray-700 hover:text-slate_gray-700 duration-100"
+              >
+                LOGIN
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

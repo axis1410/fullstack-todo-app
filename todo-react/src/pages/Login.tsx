@@ -1,10 +1,14 @@
 import axios from "axios";
 import clsx from "clsx";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserAuthContext } from "../context/UserAuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  // @ts-expect-error UserAuthContext is not undefined
+  const { setIsAuthenticated } = useContext(UserAuthContext);
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -24,6 +28,7 @@ const Login = () => {
         console.log(res.data.data.accessToken);
         localStorage.setItem("accessToken", JSON.stringify(res.data.data.accessToken));
         localStorage.setItem("refreshToken", JSON.stringify(res.data.data.refreshToken));
+        setIsAuthenticated(true);
         navigate("/");
       })
       .catch((err) => {
