@@ -1,25 +1,21 @@
-import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const Navbar = () => {
-  let Links = [
+  const [open, setOpen] = useState(false);
+
+  const { isAuthenticated, handleLogout } = useAuth();
+
+  const Links = [
     { name: "HOME", link: "/" },
     { name: "ADD ITEM", link: "/add-todo" },
   ];
-  let [open, setOpen] = useState(false);
-
-  const handleLogout = () => {
-    axios
-      .post("/api/v1/users/logout")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
-  };
 
   return (
-    <nav className="shadow-md w-full fixed top-0 left-0">
+    <nav className="shadow-md w-full fixed top-0 left-0 z-40">
       <div className="md:flex items-center justify-between bg-slate_gray-100 py-4 md:px-10 px-7">
         <div
           className="font-bold text-2xl cursor-pointer flex items-center
@@ -36,7 +32,8 @@ const Navbar = () => {
         </div>
 
         <ul
-          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-slate_gray-100 md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-200 ease-in ${
+          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-slate_gray-100 
+          md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-200 ease-in ${
             open ? "top-20 " : "top-[-490px]"
           }`}
         >
@@ -50,14 +47,16 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
-          <li className="md:ml-8 text-xl md:my-0 my-7">
-            <button
-              onClick={handleLogout}
-              className="text-french_gray-700 hover:text-slate_gray-700 duration-100"
-            >
-              LOGOUT
-            </button>
-          </li>
+          {isAuthenticated && (
+            <li className="md:ml-8 text-xl md:my-0 my-7">
+              <button
+                onClick={handleLogout}
+                className="text-french_gray-700 hover:text-slate_gray-700 duration-100"
+              >
+                LOGOUT
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

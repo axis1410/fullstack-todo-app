@@ -1,20 +1,23 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import { AuthContextProvider } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="bg-red-200">
-        <Navbar />
-      </div>
-      <div className="">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </div>
+      <AuthContextProvider>
+        <div className="z-40">
+          <Navbar />
+        </div>
+        <div className="z-[-1]">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </div>
+      </AuthContextProvider>
     </BrowserRouter>
   );
 };
