@@ -2,12 +2,15 @@ import bodyParser from "body-parser";
 import { Router } from "express";
 import {
   changeUserPassword,
+  getUserDetails,
   loginUser,
   logoutUser,
   registerUser,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 const router = Router();
+
+router.route("/").get(verifyJWT, getUserDetails);
 
 router.route("/register").post(bodyParser.json(), registerUser);
 router.route("/login").post(loginUser);
