@@ -14,5 +14,6 @@ connectToDb()
     });
   })
   .catch((err) => {
+    console.log(err)
     throw new ApiError();
   });
